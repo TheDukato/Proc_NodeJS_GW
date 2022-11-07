@@ -1,0 +1,369 @@
+[
+    {
+        "id": "36365c6cc81790ed",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "66c46f042700fd81",
+        "type": "mysql",
+        "z": "36365c6cc81790ed",
+        "mydb": "cf3da5e9d6220e0d",
+        "name": "",
+        "x": 950,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2e451bf4b2553af3",
+        "type": "function",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "func": "var iData = \"INSERT INTO historian (ID_Location,timeOfProbe,Status,Value) VALUES (\"+msg.payload.split(',')[1]+\",\"+\"\\'\"+msg.payload.split(',')[2]+\"\\'\"+\",\\'OK\\',\"+msg.payload.split(',')[0]+\")\";\nmsg.topic = iData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 200,
+        "wires": [
+            [
+                "a8584ede626cca38",
+                "66c46f042700fd81"
+            ]
+        ]
+    },
+    {
+        "id": "a8584ede626cca38",
+        "type": "debug",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ee9df31447a6f35c",
+        "type": "tcp in",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "server": "server",
+        "host": "",
+        "port": "8889",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "",
+        "base64": false,
+        "tls": "",
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "52a2fdacd34a8054",
+                "2e451bf4b2553af3"
+            ]
+        ]
+    },
+    {
+        "id": "52a2fdacd34a8054",
+        "type": "debug",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "3d423240f0791037",
+        "type": "inject",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [
+                "872a90aca82dcc04"
+            ]
+        ]
+    },
+    {
+        "id": "872a90aca82dcc04",
+        "type": "function",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "func": "msg.payload = \"24.01,1,11\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [
+                "595ba8606f1520b5",
+                "3cc410435f26e3ea",
+                "2e451bf4b2553af3"
+            ]
+        ]
+    },
+    {
+        "id": "595ba8606f1520b5",
+        "type": "debug",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "3cc410435f26e3ea",
+        "type": "function",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "func": "let dateob = Date.now();\ndate_ob = new Date();\ntimestamp = date_ob.getFullYear()+\"-\"+(\"0\" + (date_ob.getMonth() + 1)).slice(-2)+\"-\"+(\"0\" + date_ob.getDate()).slice(-2) +\" \"+ date_ob.getHours() + \":\" + date_ob.getMinutes()+ \":\" +(\"0\"+date_ob.getSeconds()).slice(-2);\n//msg.payload = dateob-10*msg.payload[2];\n//msg.payload = dateob-10;\nmsg.payload =msg.payload[2];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 120,
+        "wires": [
+            [
+                "5047c53c62542123"
+            ]
+        ]
+    },
+    {
+        "id": "5047c53c62542123",
+        "type": "debug",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9d0219db33828ac4",
+        "type": "ui_chart",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "group": "4577241d374075da",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 810,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f77e4112e8b93a2e",
+        "type": "function",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "func": "var iData = \"SELECT Value FROM historian WHERE timeOfProbe > '2022-09-21 00:00:00' AND ID_Location\";\nmsg.topic = iData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 400,
+        "wires": [
+            [
+                "5d580a0208dfb427"
+            ]
+        ]
+    },
+    {
+        "id": "5d580a0208dfb427",
+        "type": "mysql",
+        "z": "36365c6cc81790ed",
+        "mydb": "cf3da5e9d6220e0d",
+        "name": "",
+        "x": 450,
+        "y": 400,
+        "wires": [
+            [
+                "5d5ccf048f33d725"
+            ]
+        ]
+    },
+    {
+        "id": "6e7b0d4ff8b071a1",
+        "type": "inject",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "f77e4112e8b93a2e"
+            ]
+        ]
+    },
+    {
+        "id": "5d5ccf048f33d725",
+        "type": "function",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "func": "let labels = [];\nlet data = [];\n\nfor (let i = 0; i < 100; i++) {\n  //msg.payload[i] = Object.values(msg.payload[i])[i];\n  data.push(Object.values(msg.payload[i])[i]);  \n  labels.push(i);\n}\n//msg.payload = Object.values(msg.payload[0])[0];\n\nmsg.payload = [{\n    \"series\": [\"Chart Title\"],\n    \"data\": [data],\n    \"labels\": labels\n}];\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 400,
+        "wires": [
+            [
+                "cdc9302ac2265540",
+                "9d0219db33828ac4"
+            ]
+        ]
+    },
+    {
+        "id": "cdc9302ac2265540",
+        "type": "debug",
+        "z": "36365c6cc81790ed",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "cf3da5e9d6220e0d",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "database-2.cxx3vliix7rd.us-east-1.rds.amazonaws.com",
+        "port": "3306",
+        "db": "ACQ",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "4577241d374075da",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "b5febaa0c42e5cfc",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "b5febaa0c42e5cfc",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
